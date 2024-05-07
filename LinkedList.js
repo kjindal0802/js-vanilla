@@ -26,6 +26,14 @@ class LinkedList {
     this.size++;
   }
 
+  print() {
+    const pointer = this.head;
+    while(pointer.next) {
+      console.log(pointer.value);
+      pointer = pointer.next;
+    }
+  }
+
 
   getSize() {
     return this.size;
@@ -37,6 +45,8 @@ linkedList.add(1);
 linkedList.add(2);
 linkedList.add(3);
 linkedList.add(4);
+
+linkedList.print()
 
 console.log(linkedList);
 

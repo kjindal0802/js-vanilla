@@ -29,6 +29,9 @@ function findCycleDetection() {
   return false;
 }
 
-function reverseLinkedList() {}
+function reverseLinkedList() {
+
+    
+}
 
 console.log(findCycleDetection());
