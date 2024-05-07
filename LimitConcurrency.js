@@ -4,8 +4,8 @@ function limitConcurrency(cbFn, limit) {
 
   function execute({ args, resolve, reject }) {
     cbFn(...args)
-      .then(resolve)
-      .catch(reject)
+      .then((result) => resolve(result)) // Pass the result to the resolve function
+      .catch((error) => reject(error)) // Pass the error to the reject function
       .finally(() => {
         counter--;
         if (queue.length > 0) {
@@ -32,11 +32,8 @@ function limitConcurrency(cbFn, limit) {
 function getPosts(...args) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      console.log(`Processed: ${args}`);
-      // This will always reject, which could lead to an error
-      // For demonstration purposes, let's resolve instead
-      reject(`Result: ${args}`);
-    }, 2000); // Simulating async work
+      resolve(`Result: ${args}`);
+    }, 2000);
   });
 }
 
@@ -44,10 +41,10 @@ function getPosts(...args) {
 const getPostsLimited = limitConcurrency(getPosts, 3);
 
 // Test calls, with error handling for each
-getPostsLimited(1).catch(console.error);
-getPostsLimited(2).catch(console.error);
-getPostsLimited(3).catch(console.error);
-getPostsLimited(4).catch(console.error);
-getPostsLimited(5).catch(console.error);
-getPostsLimited(6).catch(console.error);
-getPostsLimited(7).catch(console.error);
+getPostsLimited(1).then((res) => console.log(res)).catch(console.error);
+getPostsLimited(2).then((res) => console.log(res)).catch(console.error);
+getPostsLimited(3).then((res) => console.log(res)).catch(console.error);
+getPostsLimited(4).then((res) => console.log(res)).catch(console.error);
+getPostsLimited(5).then((res) => console.log(res)).catch(console.error);
+getPostsLimited(6).then((res) => console.log(res)).catch(console.error);
+getPostsLimited(7).then((res) => console.log(res)).catch(console.error);
