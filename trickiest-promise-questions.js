@@ -74,23 +74,25 @@ function concurrentPromises(promises, maxLimit) {
   let index = 0;
   return new Promise((resolve, reject) => {
     function execute() {
-      if (limit < maxLimit) {
-        limit++;
-        promises[index]()
-          .then((res) => {
-            resArr[index] = res;
-          })
-          .catch((err) => {
-            resArr[index] = err;
-          })
-          .finally(() => {
-            limit--;
-            index++;
-            if (resArr.length > promises.length) {
-              resolve(resArr);
-            }
-            execute();
-          });
+      if (index < promises.length) {
+        if (limit < maxLimit) {
+          limit++;
+          promises[index]()
+            .then((res) => {
+              resArr[index] = res;
+            })
+            .catch((err) => {
+              resArr[index] = err;
+            })
+            .finally(() => {
+              limit--;
+              index++;
+              if (index === promises.length) {
+                resolve(resArr);
+              }
+              execute();
+            });
+        }
       }
     }
     execute();
