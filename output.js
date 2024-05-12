@@ -462,3 +462,28 @@ let array1 = [1, 2];
 let a = array1.push(array2);
 
 console.log(a);
+
+// ----------------------------------------------------------------------------------------------------------------------------
+
+
+setTimeout(() => {
+    console.log("SetTimeout 1");
+    Promise.resolve().then(() => {
+        console.log("Promise 1")
+    });
+}, 0);
+
+new Promise((resolve, reject) => {
+    console.log("promise2");
+    setTimeout(()=>{
+        console.log("settimeout 2");
+        resolve("resolve 1")
+    },0);
+}).then((res) => {
+    console.log("then 1");
+    setTimeout(() => {
+        console.log(res)
+    }, 0);
+})
+
+

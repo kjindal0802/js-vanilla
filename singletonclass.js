@@ -44,3 +44,13 @@ console.log(instance2.value); // Output: Instance 1 (same as instance1)
 console.log(instance1 === instance2); // Output: true (same instance)
 
 
+class Singleton {
+
+    static instance;
+    constructor(value) {ñ
+        if(!Singleton.instance) {
+            this.value = value;
+            Singleton.instance = this;
+        }
+    }
+}
